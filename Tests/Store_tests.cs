@@ -42,6 +42,20 @@ namespace StoresAndBrands
       Assert.Equal(testList, result);
     }
 
+    [Fact]
+    public void Test_Save_AssignsIdToStoreObject()
+    {
+      Store testStore = new Store("DSW");
+      testStore.Save();
+
+      Store savedStore = Store.GetAll()[0];
+
+      int result = savedStore.GetId();
+      int testId = testStore.GetId();
+
+      Assert.Equal(testId, result);
+    }
+
     public void Dispose()
     {
       Store.DeleteAll();
