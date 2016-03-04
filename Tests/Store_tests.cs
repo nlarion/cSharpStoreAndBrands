@@ -56,6 +56,20 @@ namespace StoresAndBrands
       Assert.Equal(testId, result);
     }
 
+    [Fact]
+    public void Test_Find_FindsStoreInDatabase()
+    {
+      //Arrange
+      Store testStore = new Store("FootLocker");
+      testStore.Save();
+
+      //Act
+      Store foundStore = Store.Find(testStore.GetId());
+
+      //Assert
+      Assert.Equal(testStore, foundStore);
+    }
+
     public void Dispose()
     {
       Store.DeleteAll();
