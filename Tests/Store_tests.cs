@@ -30,6 +30,18 @@ namespace StoresAndBrands
       Assert.Equal(firstStore, secondStore);
     }
 
+    [Fact]
+    public void Test_Save_SavesStoreToDatabase()
+    {
+      Store testStore = new Store("DSW");
+      testStore.Save();
+
+      List<Store> result = Store.GetAll();
+      List<Store> testList = new List<Store>{testStore};
+      
+      Assert.Equal(testList, result);
+    }
+
     public void Dispose()
     {
       Store.DeleteAll();
