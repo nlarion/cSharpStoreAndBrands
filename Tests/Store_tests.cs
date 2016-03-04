@@ -70,6 +70,25 @@ namespace StoresAndBrands
       Assert.Equal(testStore, foundStore);
     }
 
+    [Fact]
+    public void Test_Delete_DeletesStoreFromDatabase()
+    {
+    //Arrange
+    Store testStore1 = new Store("Nordstrom Rack");
+    testStore1.Save();
+
+    Store testStore2 = new Store("Ladies FootLocker");
+    testStore2.Save();
+
+    //Act
+    testStore1.Delete();
+    List<Store> resultcourses = Store.GetAll();
+    List<Store> testStoreList = new List<Store> {testStore2};
+
+    //Assert
+    Assert.Equal(testStoreList, resultcourses);
+     }
+
     public void Dispose()
     {
       Store.DeleteAll();
