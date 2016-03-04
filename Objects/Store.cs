@@ -72,6 +72,40 @@ namespace StoresAndBrands
 
       return allCategories;
     }
+    public static Store Find(int id)
+    {
+      SqlConnection conn = DB.Connection();
+      SqlDataReader rdr = null;
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("SELECT * FROM stores WHERE id = @StoreId;", conn);
+      SqlParameter storeIdParameter = new SqlParameter();
+      storeIdParameter.ParameterName = "@StoreId";
+      storeIdParameter.Value = id.ToString();
+      cmd.Parameters.Add(storeIdParameter);
+      rdr = cmd.ExecuteReader();
+
+      int foundStoreId = 0;
+      string foundStoreName = null;
+      string foundStoreNumber = null;
+
+      while(rdr.Read())
+      {
+        foundStoreId = rdr.GetInt32(0);
+        foundStoreName = rdr.GetString(1);
+      }
+      Store foundStore = new Store(foundStoreName, foundStoreId);
+
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+      return foundStore;
+    }
     public void Save()
     {
       SqlConnection conn = DB.Connection();
