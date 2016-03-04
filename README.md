@@ -16,12 +16,12 @@ This project was developed during a "Code Review" session at Epicodus, which is 
 
 ## Setup/Installation Requirements
 - Clone this repository.
-- Use the .sql in the root directory to make the databases. Or follow these commands in SQLCMD/SQL Server to create shoe_stores and shoe_stores_test:
+- Use the scripts.sql in the root directory to make the databases. Or follow these commands in SQLCMD/SQL Server to create shoe_stores and shoe_stores_test:
   * CREATE DATABASE shoe_stores;
   - GO
-  - CREATE TABLE shoes (id INT IDENTITY(1,1), name VARCHAR(255));
+  - CREATE TABLE stores (id INT IDENTITY(1,1), name VARCHAR(255));
   - CREATE TABLE brands (id INT IDENTITY(1,1), name VARCHAR(255));
-  - CREATE TABLE shoes_brands (id INT IDENTITY(1,1), shoes_id INT, brands_id INT);
+  - CREATE TABLE stores_brands (id INT IDENTITY(1,1), shoes_id INT, brands_id INT);
   - GO
 - Install Nancy the web viewer
 - Build the project using "dnu restore".
