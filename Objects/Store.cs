@@ -42,6 +42,36 @@ namespace StoresAndBrands
     {
       _name = newName;
     }
+    public static List<Store> GetAll()
+    {
+      List<Store> allCategories = new List<Store>{};
+
+      SqlConnection conn = DB.Connection();
+      SqlDataReader rdr = null;
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("SELECT * FROM stores;", conn);
+      rdr = cmd.ExecuteReader();
+
+      while(rdr.Read())
+      {
+        int storeId = rdr.GetInt32(0);
+        string storeName = rdr.GetString(1);
+        Store newStore = new Store(storeName, storeId);
+        allCategories.Add(newStore);
+      }
+
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if(conn != null)
+      {
+        conn.Close();
+      }
+
+      return allCategories;
+    }
     public void Delete()
     {
       SqlConnection conn = DB.Connection();
@@ -60,6 +90,13 @@ namespace StoresAndBrands
       {
         conn.Close();
       }
+    }
+    public static void DeleteAll()
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+      SqlCommand cmd = new SqlCommand("DELETE FROM stores;", conn);
+      cmd.ExecuteNonQuery();
     }
   }
 }
