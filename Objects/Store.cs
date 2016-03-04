@@ -159,6 +159,58 @@ namespace StoresAndBrands
         conn.Close();
       }
     }
+    public List<Brand> GetBrands()
+    {
+      SqlConnection conn = DB.Connection();
+      SqlDataReader rdr = null;
+      conn.Open();
+      List<Brand> brands = new List<Brand>{};
+      SqlCommand cmd = new SqlCommand("SELECT b.id, b.name from brands b join stores_brands sb on (sb.brands_id = b.id) join store s on (s.id = sb.store_id) WHERE s.id = @StoreId", conn);
+
+      SqlParameter studentIdParameter = new SqlParameter();
+      studentIdParameter.ParameterName = "@StoreId";
+      studentIdParameter.Value = this.GetId();
+      cmd.Parameters.Add(studentIdParameter);
+      rdr = cmd.ExecuteReader();
+      while (rdr.Read())
+      {
+        int studentId = rdr.GetInt32(0);
+        string studentName = rdr.GetString(1);
+        Brand newBrand= new Brand(studentName, studentId);
+        brands.Add(newBrand);
+      }
+      if (rdr != null)
+      {
+        rdr.Close();
+      }
+      if (conn != null)
+      {
+        conn.Close();
+      }
+      return brands;
+    }
+    public void AddBrand(Brand newBrand)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+      SqlCommand cmd = new SqlCommand("INSERT INTO store_brands (store_id, student_id) VALUES (@StoreId, @BrandId)", conn);
+      SqlParameter storeIdParameter = new SqlParameter();
+      storeIdParameter.ParameterName = "@StoreId";
+      storeIdParameter.Value = this.GetId();
+      cmd.Parameters.Add(storeIdParameter);
+
+      SqlParameter studentIdParameter = new SqlParameter();
+      studentIdParameter.ParameterName = "@BrandId";
+      studentIdParameter.Value = newBrand.GetId();
+      cmd.Parameters.Add(studentIdParameter);
+
+      cmd.ExecuteNonQuery();
+
+      if (conn != null)
+      {
+        conn.Close();
+      }
+    }
     public void Delete()
     {
       SqlConnection conn = DB.Connection();
