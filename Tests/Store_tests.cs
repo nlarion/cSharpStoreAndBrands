@@ -71,23 +71,112 @@ namespace StoresAndBrands
     }
 
     [Fact]
+    public void Test_Update_UpdatesStoreObject()
+    {
+      Store testStore = new Store("FootLocker");
+      testStore.Save();
+
+      testStore.Update("Payless");
+
+      Store afterStore = Store.Find(testStore.GetId());
+
+      Assert.Equal(afterStore.GetName(), "Payless");
+    }
+
+    [Fact]
+    public void Test_Update_UpdatesStoreObjectInDB()
+    {
+      Store testStore = new Store("FootLocker");
+      testStore.Save();
+
+      testStore.Update("Payless");
+
+      Store afterStore = Store.Find(testStore.GetId());
+
+      Store testStore2 = new Store("Payless", testStore.GetId());
+      // Console.WriteLine(afterStore.GetId());
+      // Console.WriteLine(testStore2.GetId());
+      Assert.Equal(afterStore, testStore2);
+    }
+
+    // [Fact]
+    // public void Test_GetBrands_RetrievesAllBrandsWithStore()
+    // {
+    //   Store testStore = new Store("FootLocker");
+    //   testStore.Save();
+
+    //   Brand firstBrand = new Brand("Asic");
+    //   firstBrand.Save();
+    //   Brand secondBrand = new Brand("Timberland");
+    //   secondBrand.Save();
+
+    //   testStore.AddBrand(firstBrand);
+    //   List<Brand> testBrandList = new List<Brand> {firstBrand};
+    //   List<Brand> resultBrandList = testStore.GetBrands();
+
+    //   Assert.Equal(testBrandList, resultBrandList);
+    // }
+
+    // [Fact]
+    // public void Test_AddBrand_AddsBrandToStore()
+    // {
+    //   //Arrange
+    //   Store testStore = new Store("Payless");
+    //   testStore.Save();
+
+    //   Brand testBrand = new Brand("Nike");
+    //   testBrand.Save();
+
+    //   Brand testBrand2 = new Brand("Adidas");
+    //   testBrand2.Save();
+
+    //   //Act
+    //   testStore.AddBrand(testBrand);
+    //   testStore.AddBrand(testBrand2);
+
+    //   List<Brand> result = testStore.GetBrands();
+    //   List<Brand> testList = new List<Brand>{testBrand, testBrand2};
+
+    //   //Assert
+    //   Assert.Equal(testList, result);
+    // }
+
+    // [Fact]
+    // public void Test_Delete_DeletesStoreAssociationsFromDatabase()
+    // {
+    //   Brand testBrand = new Brand("Nike");
+    //   testBrand.Save();
+
+    //   Store testStore = new Store("Nike Outlet");
+    //   testStore.Save();
+
+    //   testStore.AddBrand(testBrand);
+    //   testStore.Delete();
+
+    //   List<Store> resultBrandcourses = testBrand.GetStore();
+    //   List<Store> testBrandcourses = new List<Store> {};
+
+    //   Assert.Equal(testBrandcourses, resultBrandcourses);
+    // }
+
+    [Fact]
     public void Test_Delete_DeletesStoreFromDatabase()
     {
-    //Arrange
-    Store testStore1 = new Store("Nordstrom Rack");
-    testStore1.Save();
+      //Arrange
+      Store testStore1 = new Store("Nordstrom Rack");
+      testStore1.Save();
 
-    Store testStore2 = new Store("Ladies FootLocker");
-    testStore2.Save();
+      Store testStore2 = new Store("Ladies FootLocker");
+      testStore2.Save();
 
-    //Act
-    testStore1.Delete();
-    List<Store> resultcourses = Store.GetAll();
-    List<Store> testStoreList = new List<Store> {testStore2};
+      //Act
+      testStore1.Delete();
+      List<Store> resultcourses = Store.GetAll();
+      List<Store> testStoreList = new List<Store> {testStore2};
 
-    //Assert
-    Assert.Equal(testStoreList, resultcourses);
-     }
+      //Assert
+      Assert.Equal(testStoreList, resultcourses);
+    }
 
     public void Dispose()
     {

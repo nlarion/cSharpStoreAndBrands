@@ -8,7 +8,6 @@ namespace StoresAndBrands
   {
     private int _id;
     private string _name;
-    private string _storeNumber;
 
     public Store(string name, int id = 0)
     {
@@ -130,6 +129,32 @@ namespace StoresAndBrands
         rdr.Close();
       }
       if(conn != null)
+      {
+        conn.Close();
+      }
+    }
+    public void Update(string storeName)
+    {
+      SqlConnection conn = DB.Connection();
+      conn.Open();
+
+      SqlCommand cmd = new SqlCommand("update stores set name=@NewStore where id = @StoreId;", conn);
+
+      SqlParameter newStoreParameter = new SqlParameter();
+      newStoreParameter.ParameterName = "@NewStore";
+      newStoreParameter.Value = storeName;
+      cmd.Parameters.Add(newStoreParameter);
+
+      SqlParameter storeIdParameter = new SqlParameter();
+      storeIdParameter.ParameterName = "@StoreId";
+      storeIdParameter.Value = this._id;
+      cmd.Parameters.Add(storeIdParameter);
+
+      cmd.ExecuteNonQuery();
+
+      this._name = storeName;
+
+      if (conn != null)
       {
         conn.Close();
       }
