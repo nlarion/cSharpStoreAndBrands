@@ -43,7 +43,7 @@ namespace StoresAndBrands
     }
     public static List<Store> GetAll()
     {
-      List<Store> allCategories = new List<Store>{};
+      List<Store> allStores = new List<Store>{};
 
       SqlConnection conn = DB.Connection();
       SqlDataReader rdr = null;
@@ -57,7 +57,7 @@ namespace StoresAndBrands
         int storeId = rdr.GetInt32(0);
         string storeName = rdr.GetString(1);
         Store newStore = new Store(storeName, storeId);
-        allCategories.Add(newStore);
+        allStores.Add(newStore);
       }
 
       if (rdr != null)
@@ -69,7 +69,7 @@ namespace StoresAndBrands
         conn.Close();
       }
 
-      return allCategories;
+      return allStores;
     }
     public static Store Find(int id)
     {
@@ -86,7 +86,6 @@ namespace StoresAndBrands
 
       int foundStoreId = 0;
       string foundStoreName = null;
-      string foundStoreNumber = null;
 
       while(rdr.Read())
       {
@@ -165,18 +164,18 @@ namespace StoresAndBrands
       SqlDataReader rdr = null;
       conn.Open();
       List<Brand> brands = new List<Brand>{};
-      SqlCommand cmd = new SqlCommand("SELECT b.id, b.name from brands b join stores_brands sb on (sb.brands_id = b.id) join store s on (s.id = sb.store_id) WHERE s.id = @StoreId", conn);
+      SqlCommand cmd = new SqlCommand("SELECT b.id, b.name from brands b join stores_brands sb on (sb.brands_id = b.id) join stores s on (s.id = sb.stores_id) WHERE s.id = @StoreId", conn);
 
-      SqlParameter studentIdParameter = new SqlParameter();
-      studentIdParameter.ParameterName = "@StoreId";
-      studentIdParameter.Value = this.GetId();
-      cmd.Parameters.Add(studentIdParameter);
+      SqlParameter storeIdParameter = new SqlParameter();
+      storeIdParameter.ParameterName = "@StoreId";
+      storeIdParameter.Value = this.GetId();
+      cmd.Parameters.Add(storeIdParameter);
       rdr = cmd.ExecuteReader();
       while (rdr.Read())
       {
-        int studentId = rdr.GetInt32(0);
+        int storeId = rdr.GetInt32(0);
         string studentName = rdr.GetString(1);
-        Brand newBrand= new Brand(studentName, studentId);
+        Brand newBrand= new Brand(studentName, storeId);
         brands.Add(newBrand);
       }
       if (rdr != null)
@@ -193,16 +192,16 @@ namespace StoresAndBrands
     {
       SqlConnection conn = DB.Connection();
       conn.Open();
-      SqlCommand cmd = new SqlCommand("INSERT INTO store_brands (store_id, student_id) VALUES (@StoreId, @BrandId)", conn);
+      SqlCommand cmd = new SqlCommand("INSERT INTO stores_brands (stores_id, brands_id) VALUES (@StoreId, @BrandId)", conn);
       SqlParameter storeIdParameter = new SqlParameter();
       storeIdParameter.ParameterName = "@StoreId";
       storeIdParameter.Value = this.GetId();
       cmd.Parameters.Add(storeIdParameter);
 
-      SqlParameter studentIdParameter = new SqlParameter();
-      studentIdParameter.ParameterName = "@BrandId";
-      studentIdParameter.Value = newBrand.GetId();
-      cmd.Parameters.Add(studentIdParameter);
+      SqlParameter brandIdParameter = new SqlParameter();
+      brandIdParameter.ParameterName = "@BrandId";
+      brandIdParameter.Value = newBrand.GetId();
+      cmd.Parameters.Add(brandIdParameter);
 
       cmd.ExecuteNonQuery();
 

@@ -14,7 +14,7 @@ namespace StoresAndBrands
     }
 
     [Fact]
-    public void test_coursesEmptyAtFirst()
+    public void test_StoresEmptyAtFirst()
     {
       int result = Store.GetAll().Count;
 
@@ -153,10 +153,10 @@ namespace StoresAndBrands
       testStore.AddBrand(testBrand);
       testStore.Delete();
 
-      List<Store> resultBrandcourses = testBrand.GetStore();
-      List<Store> testBrandcourses = new List<Store> {};
+      List<Store> resultBrandStores = testBrand.GetStores();
+      List<Store> testBrandStores = new List<Store> {};
 
-      Assert.Equal(testBrandcourses, resultBrandcourses);
+      Assert.Equal(testBrandStores, resultBrandStores);
     }
 
     [Fact]
@@ -171,11 +171,11 @@ namespace StoresAndBrands
 
       //Act
       testStore1.Delete();
-      List<Store> resultcourses = Store.GetAll();
+      List<Store> resultStores = Store.GetAll();
       List<Store> testStoreList = new List<Store> {testStore2};
 
       //Assert
-      Assert.Equal(testStoreList, resultcourses);
+      Assert.Equal(testStoreList, resultStores);
     }
 
     public void Dispose()
