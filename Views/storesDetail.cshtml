@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <title>The Library</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Stores</h1>
+      <hr />
+      <h3>Edit a Store</h3>
+      @if(Model != null)
+      {
+        <form action="Stores/@Model["foundStore"].GetId()" method="post">
+          <label>Change Store Name: </label>
+          <input type="text" name="store-name" value="@Model["foundStore"].GetName()">
+          <button class="btn btn-success" type="submit" name="button">Submit</button>
+        </form>
+      }
+      <h2>Store With Their Brands</h2>
+      @if(Model != null)
+      {
+        <h3>@Model["foundStore"].GetName()</h3>
+        <ul>
+          @foreach(var brand in Model["storesBrands"])
+          {
+            <li>@brand.GetName()</li>
+          }
+        </ul>
+      }
+      <a href="/Stores/Delete/@Model["foundStore"].GetId()">Delete This Store</a>
+      <h3><a href="/Stores/">Back</a></h3>
+    </div>
+  </body>
+</html>

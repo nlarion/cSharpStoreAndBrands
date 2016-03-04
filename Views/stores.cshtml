@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <title>The Library</title>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Stores</h1>
+      <hr />
+      <h2>Add a store for a brand</h2>
+      <form action="/Stores" method="post">
+        <label>Store Name: </label>
+        <input type="text" name="store-name">
+        <label>For Brand: </label>
+        <select name="brand-name" type="text">
+          @if (Model["brandList"].Count > 0 )
+          {
+            @foreach (var brand in @Model["brandList"])
+            {
+              <option value="@brand.GetId()">@brand.GetName()</option>
+            }
+          }
+
+        </select>
+        <button type="submit">ADD</button>
+      </form>
+      <hr />
+      <h2>Store List</h2>
+
+        @if(Model != null)
+        {
+          <ul>
+            @foreach(var store in Model["storeList"])
+            {
+              <li><a href="/Stores/@store.GetId()">@store.GetName()</a></li>
+              @if(store.GetBrands() != null)
+              {
+                <ul>
+                  @foreach(var brand in store.GetBrands())
+                  {
+                    <li>
+                      @brand.GetName()
+                    </li>
+                  }
+                </ul>
+              }
+            }
+          </ul>
+        }
+      <h3><a href="/">Back</a></h3>
+    </div>
+  </body>
+</html>
