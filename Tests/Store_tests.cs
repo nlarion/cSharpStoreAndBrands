@@ -21,6 +21,15 @@ namespace StoresAndBrands
       Assert.Equal(0, result);
     }
 
+    [Fact]
+    public void Test_Equal_ReturnsTrueForSameName()
+    {
+      Store firstStore = new Store("Payless");
+      Store secondStore = new Store("Payless");
+
+      Assert.Equal(firstStore, secondStore);
+    }
+
     public void Dispose()
     {
       Store.DeleteAll();
