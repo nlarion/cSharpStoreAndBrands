@@ -93,7 +93,6 @@ namespace StoresAndBrands
         foundBrandName = rdr.GetString(1);
       }
       Brand foundBrand = new Brand(foundBrandName, foundBrandId);
-
       if (rdr != null)
       {
         rdr.Close();

@@ -8,30 +8,30 @@
   </head>
   <body>
     <div class="container">
-      <h1>Stores</h1>
+      <h1>Brands</h1>
       <hr />
-      <h3>Edit a Store</h3>
+      <h3>Edit a Brand</h3>
       @if(Model != null)
       {
-        <form action="/Stores/@Model["foundStore"].GetId()" method="post">
-          <label>Change Store Name: </label>
-          <input type="text" name="store-name" value="@Model["foundStore"].GetName()">
+        <form action="/Brands/@Model["foundBrand"].GetId()" method="post">
+          <label>Change Brand Name: </label>
+          <input type="text" name="brand-name" value="@Model["foundBrand"].GetName()">
           <button class="btn btn-success" type="submit" name="button">Submit</button>
         </form>
       }
-      <h2>Store With Their Brands</h2>
+      <h2>Brand With Their Stores</h2>
       @if(Model != null)
       {
-        <h3>@Model["foundStore"].GetName()</h3>
+        <h3>@Model["foundBrand"].GetName()</h3>
         <ul>
-          @foreach(var brand in Model["foundBrands"])
+          @foreach(var store in Model["foundStores"])
           {
-            <li>@brand.GetName()</li>
+            <li>@store.GetName()</li>
           }
         </ul>
       }
-      <a href="/Stores/Delete/@Model["foundStore"].GetId()">Delete This Store</a>
-      <h3><a href="/Stores/">Back</a></h3>
+      <a href="/Brands/Delete/@Model["foundBrand"].GetId()">Delete This Brand</a>
+      <h3><a href="/Brands/">Back</a></h3>
     </div>
   </body>
 </html>
