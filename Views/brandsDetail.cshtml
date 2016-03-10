@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-    <title>The Library</title>
+    <title>Shoe Stores and Brands Website</title>
   </head>
   <body>
     <div class="container">
@@ -17,6 +17,16 @@
           <label>Change Brand Name: </label>
           <input type="text" name="brand-name" value="@Model["foundBrand"].GetName()">
           <button class="btn btn-success" type="submit" name="button">Submit</button>
+        </form>        
+        <form action="/Brands/AddStore/@Model["foundBrand"].GetId()" method="post">
+          <label>Add a Store:</label>
+          <select name="store-name">
+            @foreach(var store in Model["allStores"])
+            {
+              <option value="@store.GetId()">@store.GetName()</option>
+            }
+          </select>
+          <button class="btn btn-success" type="submit" name="button">Add</button>
         </form>
       }
       <h2>Brand With Their Stores</h2>

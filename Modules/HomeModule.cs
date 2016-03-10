@@ -29,7 +29,6 @@ namespace StoresAndBrands
           Brand newBrand = Brand.Find(Request.Form["brand-name"]);
           newBrand.AddStore(newStore);
         }
-        
         List<Brand> brandList = Brand.GetAll();
         List<Store> storeList = Store.GetAll();
         returnDictionary.Add("brandList", brandList);
@@ -38,19 +37,38 @@ namespace StoresAndBrands
       };
       Get["/Stores/{id}"]= parameters =>{
         Dictionary<string, object> returnDictionary = new Dictionary<string, object> ();
+        List<Brand> allBrands = Brand.GetAll();
         Store foundStore = Store.Find(parameters.id);
         List<Brand> foundBrands = foundStore.GetBrands();
         returnDictionary.Add("foundStore", foundStore);
         returnDictionary.Add("foundBrands", foundBrands);
+        returnDictionary.Add("allBrands", allBrands);
         return View["storesDetail.cshtml", returnDictionary];
       };
       Post["/Stores/{id}"]= parameters =>{
         Store foundStore = Store.Find(parameters.id);
         foundStore.Update(Request.Form["store-name"]);
         Dictionary<string, object> returnDictionary = new Dictionary<string, object> ();
+        List<Brand> allBrands = Brand.GetAll();
         List<Brand> foundBrands = foundStore.GetBrands();
         returnDictionary.Add("foundStore", foundStore);
         returnDictionary.Add("foundBrands", foundBrands);
+        returnDictionary.Add("allBrands", allBrands);
+        return View["storesDetail.cshtml", returnDictionary];
+      };
+      Post["/Stores/AddBrand/{id}"]= parameters =>{
+        Store foundStore = Store.Find(parameters.id);
+        if(Request.Form["brand-name"] != null)
+        {
+          Brand newBrand = Brand.Find(Request.Form["brand-name"]);
+          foundStore.AddBrand(newBrand);
+        }
+        Dictionary<string, object> returnDictionary = new Dictionary<string, object> ();
+        List<Brand> allBrands = Brand.GetAll();
+        List<Brand> foundBrands = foundStore.GetBrands();
+        returnDictionary.Add("foundStore", foundStore);
+        returnDictionary.Add("foundBrands", foundBrands);
+        returnDictionary.Add("allBrands", allBrands);
         return View["storesDetail.cshtml", returnDictionary];
       };
       Get["/Stores/Delete/{id}"]= parameters =>{
@@ -91,16 +109,35 @@ namespace StoresAndBrands
         foundBrand.Update(Request.Form["brand-name"]);
         Dictionary<string, object> returnDictionary = new Dictionary<string, object> ();
         List<Store> foundStores = foundBrand.GetStores();
+        List<Store> allStores = Store.GetAll();
         returnDictionary.Add("foundStores", foundStores);
         returnDictionary.Add("foundBrand", foundBrand);
+        returnDictionary.Add("allStores", allStores);
+        return View["brandsDetail.cshtml", returnDictionary];
+      };      
+      Post["/Brands/AddStore/{id}"]= parameters =>{
+        Brand foundBrand = Brand.Find(parameters.id);
+        if(Request.Form["store-name"] != null)
+        {
+          Store newStore = Store.Find(Request.Form["store-name"]);
+          foundBrand.AddStore(newStore);
+        }
+        Dictionary<string, object> returnDictionary = new Dictionary<string, object> ();
+        List<Store> foundStores = foundBrand.GetStores();
+        List<Store> allStores = Store.GetAll();
+        returnDictionary.Add("foundStores", foundStores);
+        returnDictionary.Add("foundBrand", foundBrand);
+        returnDictionary.Add("allStores", allStores);
         return View["brandsDetail.cshtml", returnDictionary];
       };
       Get["/Brands/{id}"]= parameters =>{
         Dictionary<string, object> returnDictionary = new Dictionary<string, object> ();
         Brand foundBrand = Brand.Find(parameters.id);
         List<Store> foundStores = foundBrand.GetStores();
+        List<Store> allStores = Store.GetAll();
         returnDictionary.Add("foundStores", foundStores);
         returnDictionary.Add("foundBrand", foundBrand);
+        returnDictionary.Add("allStores", allStores);
         return View["brandsDetail.cshtml", returnDictionary];
       };
       Get["/Brands/Delete/{id}"]= parameters =>{

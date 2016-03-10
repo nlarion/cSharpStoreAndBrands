@@ -164,7 +164,7 @@ namespace StoresAndBrands
       SqlDataReader rdr = null;
       conn.Open();
       List<Brand> brands = new List<Brand>{};
-      SqlCommand cmd = new SqlCommand("SELECT b.id, b.name from brands b join stores_brands sb on (sb.brands_id = b.id) join stores s on (s.id = sb.stores_id) WHERE s.id = @StoreId", conn);
+      SqlCommand cmd = new SqlCommand("SELECT b.id, b.name from brands b join brands_stores sb on (sb.brands_id = b.id) join stores s on (s.id = sb.stores_id) WHERE s.id = @StoreId", conn);
 
       SqlParameter storeIdParameter = new SqlParameter();
       storeIdParameter.ParameterName = "@StoreId";
@@ -192,7 +192,7 @@ namespace StoresAndBrands
     {
       SqlConnection conn = DB.Connection();
       conn.Open();
-      SqlCommand cmd = new SqlCommand("INSERT INTO stores_brands (stores_id, brands_id) VALUES (@StoreId, @BrandId)", conn);
+      SqlCommand cmd = new SqlCommand("INSERT INTO brands_stores (stores_id, brands_id) VALUES (@StoreId, @BrandId)", conn);
       SqlParameter storeIdParameter = new SqlParameter();
       storeIdParameter.ParameterName = "@StoreId";
       storeIdParameter.Value = this.GetId();
@@ -215,7 +215,7 @@ namespace StoresAndBrands
       SqlConnection conn = DB.Connection();
       conn.Open();
 
-      SqlCommand cmd = new SqlCommand("DELETE FROM stores WHERE id = @StoreId; DELETE FROM stores_brands WHERE stores_id = @StoreId;", conn);
+      SqlCommand cmd = new SqlCommand("DELETE FROM stores WHERE id = @StoreId; DELETE FROM brands_stores WHERE stores_id = @StoreId;", conn);
 
       SqlParameter storeIdParameter = new SqlParameter();
       storeIdParameter.ParameterName = "@StoreId";
