@@ -21,7 +21,7 @@ This project was developed during a "Code Review" session at Epicodus, which is 
   - GO
   - CREATE TABLE stores (id INT IDENTITY(1,1), name VARCHAR(255));
   - CREATE TABLE brands (id INT IDENTITY(1,1), name VARCHAR(255));
-  - CREATE TABLE stores_brands (id INT IDENTITY(1,1), shoes_id INT, brands_id INT);
+  - CREATE TABLE brands_stores (id INT IDENTITY(1,1), shoes_id INT, brands_id INT);
   - GO
 - Install Nancy the web viewer
 - Build the project using "dnu restore".
